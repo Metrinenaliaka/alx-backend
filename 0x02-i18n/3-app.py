@@ -3,6 +3,7 @@
 using babel.localeselector & request.accept_languages.best_match
 """
 
+import gettext
 from flask import Flask, request, render_template
 from flask_babel import Babel
 app = Flask(__name__)
@@ -34,11 +35,14 @@ def get_locale() -> str:
 
 
 @app.route('/')
-def index() -> str:
+def home() -> str:
     """
-    render a html file
+    render template
     """
-    return render_template('2-index.html')
+    home_title = gettext("home_title")
+    home_header = gettext("home_header")
+    return render_template('home.html',
+                           home_title=home_title, home_header=home_header)
 
 
 if __name__ == "__main__":
