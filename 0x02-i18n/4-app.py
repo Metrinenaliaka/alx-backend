@@ -5,7 +5,7 @@ using babel.localeselector & request.accept_languages.best_match
 
 import gettext
 from flask import Flask, request, render_template
-from flask_babel import Babel
+from flask_babel import Babel, gettext
 app = Flask(__name__)
 
 
@@ -31,6 +31,9 @@ def get_locale() -> str:
     Determine the best match with
     our supported languages
     """
+    locale = request.args.get('locale')
+    if locale and locale in 'LANGUAGES':
+        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -41,7 +44,7 @@ def home() -> str:
     """
     home_title = gettext("home_title")
     home_header = gettext("home_header")
-    return render_template('3-index.html',
+    return render_template('4-index.html',
                            home_title=home_title, home_header=home_header)
 
 
